@@ -78,6 +78,8 @@ document.querySelectorAll(".faq-question").forEach((btn) => {
 });
 
 // ===== FORMULÁRIO COM VALIDAÇÃO =====
+const API_URL = "https://victory-dev-server.onrender.com";
+
 const form = document.getElementById("agendamentoForm");
 const formSuccess = document.getElementById("formSuccess");
 
@@ -121,7 +123,7 @@ function validateField(id, errorId, message) {
   }
 });
 
-form.addEventListener("submit", (e) => {
+form.addEventListener("submit", async (e) => {
   e.preventDefault();
 
   const v1 = validateField("nome", "nomeError", "Seu nome é obrigatório.");
@@ -140,14 +142,36 @@ form.addEventListener("submit", (e) => {
 
   if (!v1 || !v2 || !v3 || !v4 || !v5) return;
 
-  // Simula envio
   const btn = document.getElementById("btnText");
   btn.textContent = "Enviando...";
 
-  setTimeout(() => {
-    form.style.display = "none";
-    formSuccess.classList.remove("hidden");
-  }, 1400);
+  const dados = {
+    nome:     document.getElementById("nome").value,
+    email:    document.getElementById("email").value,
+    whatsapp: document.getElementById("whatsapp").value,
+    nicho:    document.getElementById("nicho").value,
+    servico:  document.getElementById("servico").value,
+  };
+
+  try {
+    const resposta = await fetch(`${API_URL}/leads`, {
+      method:  "POST",
+      headers: { "Content-Type": "application/json" },
+      body:    JSON.stringify(dados)
+    });
+
+    if (resposta.ok) {
+      form.style.display = "none";
+      formSuccess.classList.remove("hidden");
+    } else {
+      btn.textContent = "Enviar";
+      alert("Erro ao enviar. Tente novamente.");
+    }
+  } catch (erro) {
+    console.error("Erro ao conectar com o servidor:", erro);
+    btn.textContent = "Enviar";
+    alert("Erro ao conectar. Tente novamente.");
+  }
 });
 
 // Formata telefone automaticamente
