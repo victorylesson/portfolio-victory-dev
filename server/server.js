@@ -9,7 +9,7 @@ const app = express();
 app.use(
   cors({
     origin: ["https://victory-dev.netlify.app", "http://localhost:3000"],
-    methods: ["GET", "POST"],
+    methods: ["GET", "POST", "DELETE"],
   }),
 );
 app.use(express.json());
