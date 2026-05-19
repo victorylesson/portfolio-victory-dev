@@ -146,18 +146,19 @@ form.addEventListener("submit", async (e) => {
   btn.textContent = "Enviando...";
 
   const dados = {
-    nome:     document.getElementById("nome").value,
-    email:    document.getElementById("email").value,
+    nome: document.getElementById("nome").value,
+    email: document.getElementById("email").value,
     whatsapp: document.getElementById("whatsapp").value,
-    nicho:    document.getElementById("nicho").value,
-    servico:  document.getElementById("servico").value,
+    nicho: document.getElementById("nicho").value,
+    servico: document.getElementById("servico").value,
+    mensagem: document.getElementById("mensagem").value,
   };
 
   try {
     const resposta = await fetch(`${API_URL}/leads`, {
-      method:  "POST",
+      method: "POST",
       headers: { "Content-Type": "application/json" },
-      body:    JSON.stringify(dados)
+      body: JSON.stringify(dados),
     });
 
     if (resposta.ok) {
@@ -210,9 +211,9 @@ const chatResponses = {
     "Ofereço desenvolvimento de sites, landing pages, automações com IA, gestão de dados e suporte técnico. Qual desses você precisa?",
   site: "Desenvolvo sites modernos, rápidos e focados em conversão. Cada projeto é 100% personalizado. Quer agendar uma conversa para falar sobre o seu?",
   preço:
-    "Os valores variam conforme o escopo. Landing pages a partir de R$500. O mais bacana é você agendar uma consulta gratuita e eu te faço um orçamento personalizado!",
+    "Os valores variam conforme o escopo. Landing pages costumam ser uma ótima escolha para o início. O mais bacana é você agendar uma consulta gratuita e eu te faço um orçamento personalizado!",
   preco:
-    "Os valores variam conforme o escopo. Landing pages a partir de R$500. O mais bacana é você agendar uma consulta gratuita e eu te faço um orçamento personalizado!",
+    "Os valores variam conforme o escopo. Landing pages costumam ser uma ótima escolha para o início. O mais bacana é você agendar uma consulta gratuita e eu te faço um orçamento personalizado!",
   valor:
     "Cada projeto tem um orçamento personalizado. Me conta o que você precisa e te passo um valor exato. Pode agendar uma reunião gratuita pelo formulário da página!",
   prazo:
@@ -230,7 +231,7 @@ const chatResponses = {
   agendamento:
     "Preencha o formulário de agendamento aqui na página e entro em contato em até 2 horas para confirmar. É totalmente gratuito!",
   projetos:
-    "Já entreguei mais de 20 projetos para clínicas, restaurantes, escritórios, academias, e-commerces e muito mais. Dá uma olhada nos cases na seção Portfólio!",
+    "Já conclui projetos de clínicas, restaurantes, escritórios, academias, e-commerces e muito mais. Dá uma olhada nos cases na seção Portfólio!",
   suporte:
     "Todo projeto inclui 30 dias de suporte gratuito após a entrega. Também ofereço planos mensais de manutenção.",
   obrigado: "Disponha! Se precisar de mais alguma coisa, é só falar.",
