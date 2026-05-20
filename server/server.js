@@ -7,6 +7,7 @@ const Lead = require("./models/Lead");
 const app = express();
 
 app.use(cors());
+app.use(express.json()); // add
 // Conecta ao banco
 mongoose
   .connect(
