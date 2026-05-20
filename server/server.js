@@ -6,12 +6,7 @@ require("dotenv").config();
 const Lead = require("./models/Lead");
 const app = express();
 
-app.use(
-  cors({
-    origin: ["https://victory-dev.vercel.app", "http://localhost:3000"],
-    methods: ["GET", "POST", "DELETE"],
-  }),
-);
+app.use(cors());
 // Conecta ao banco
 mongoose
   .connect(
