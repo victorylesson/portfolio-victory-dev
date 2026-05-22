@@ -23,19 +23,23 @@ Landing page profissional para captação de leads, com formulário de agendamen
 ## 🚀 Tecnologias
 
 **Front-end**
+
 - HTML5
 - CSS3
 - JavaScript (Vanilla)
 
 **Back-end**
+
 - Node.js
 - Express.js
 - Mongoose
 
 **Banco de Dados**
+
 - MongoDB Atlas
 
 **Deploy**
+
 - Netlify (front-end)
 - Render (servidor)
 
@@ -106,9 +110,10 @@ Abra o arquivo `index.html` no navegador **ou** acesse via `http://localhost:300
 
 ## 🌐 Deploy
 
-O front-end está hospedado no **Netlify** com deploy automático a partir da branch `main`.
+O front-end está hospedado no **Vercel** com deploy automático a partir da branch `main`.
 
 O back-end está hospedado no **Render** em:
+
 ```
 https://victory-dev-server.onrender.com
 ```
@@ -121,17 +126,23 @@ Toda vez que você fizer `git push` na branch `main`, o Netlify atualiza o site 
 
 1. Faça um fork do projeto
 2. Crie uma branch para sua feature:
+
 ```bash
 git checkout -b minha-feature
 ```
+
 3. Faça suas alterações e commit:
+
 ```bash
 git commit -m "feat: minha nova feature"
 ```
+
 4. Envie para o seu fork:
+
 ```bash
 git push origin minha-feature
 ```
+
 5. Abra um **Pull Request** explicando o que foi alterado.
 
 ---
