@@ -153,5 +153,5 @@ Feito por **Victory de Oliveira**
 
 - 📧 victorymendestech@hotmail.com
 - 📱 (81) 9 9148-2982
-- 🌐 [victory-dev.netlify.app](https://victory-dev.netlify.app)
+- 🌐 [victory-dev.vercel.app/] https://victory-dev.vercel.app/
 - 📷 Instagram: [@victory_dev](https://instagram.com/victory_dev)
