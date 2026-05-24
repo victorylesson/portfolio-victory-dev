@@ -1,7 +1,7 @@
+require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
-require("dotenv").config();
 
 const Lead = require("./models/Lead");
 const app = express();
@@ -11,7 +11,7 @@ app.use(express.json()); // add
 // Conecta ao banco
 mongoose
   .connect(
-    "mongodb://victorymendestech_db_user:s8oMIBaGBlsfwSFu@ac-xrli92b-shard-00-00.0hw4wha.mongodb.net:27017,ac-xrli92b-shard-00-01.0hw4wha.mongodb.net:27017,ac-xrli92b-shard-00-02.0hw4wha.mongodb.net:27017/victory_dev?tls=true&replicaSet=atlas-y188w4-shard-0&authSource=admin",
+    process.env.MONGODB_URI, // ← lê do .env
     {
       serverSelectionTimeoutMS: 30000,
       connectTimeoutMS: 30000,
