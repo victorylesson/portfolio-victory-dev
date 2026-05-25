@@ -21,39 +21,31 @@ const conectarBanco = async () => {
     console.log("Banco conectado!");
   } catch (err) {
     console.error("Erro ao conectar ao banco:", err.message);
-    // Tenta reconectar após 5 segundos
     setTimeout(conectarBanco, 5000);
   }
 };
 
 conectarBanco();
 
-// Reconecta automaticamente se cair
 mongoose.connection.on("disconnected", () => {
   console.warn("MongoDB desconectado. Reconectando...");
   setTimeout(conectarBanco, 5000);
 });
 
-// ===== HEALTH CHECK (para o UptimeRobot pingar) =====
+// ===== HEALTH CHECK =====
 app.get("/", (req, res) => {
   const status = mongoose.connection.readyState === 1 ? "ok" : "sem banco";
   res.json({ status, timestamp: new Date().toISOString() });
 });
 
 // ===== ROTAS =====
-
-// CREATE: salva o lead
 app.post("/leads", async (req, res) => {
   try {
-    // Verifica se o banco está conectado antes de tentar salvar
     if (mongoose.connection.readyState !== 1) {
       return res
         .status(503)
-        .json({
-          erro: "Banco ainda conectando. Tente novamente em instantes.",
-        });
+        .json({ erro: "Banco ainda conectando. Tente novamente." });
     }
-
     const lead = new Lead(req.body);
     await lead.save();
     res.status(201).json({ mensagem: "Lead salvo com sucesso!" });
@@ -62,7 +54,6 @@ app.post("/leads", async (req, res) => {
   }
 });
 
-// READ: lista todos os leads
 app.get("/leads", async (req, res) => {
   try {
     const leads = await Lead.find().sort({ criadoEm: -1 });
@@ -72,7 +63,6 @@ app.get("/leads", async (req, res) => {
   }
 });
 
-// DELETE: remove um lead por ID
 app.delete("/leads/:id", async (req, res) => {
   try {
     await Lead.findByIdAndDelete(req.params.id);
