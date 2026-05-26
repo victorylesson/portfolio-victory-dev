@@ -1,46 +1,34 @@
 # victory_dev | Soluções Digitais
 
-Landing page profissional para captação de leads, com formulário de agendamento integrado a banco de dados, chatbot interativo e servidor Node.js + MongoDB Atlas no back-end.
+Landing page profissional para captação de leads, com formulário de agendamento integrado a banco de dados e servidor Node.js + MongoDB Atlas no back-end.
 
 ---
 
 ## 🖥️ Visual
 
-> Adicione aqui um screenshot ou GIF da sua landing page em funcionamento.
-> Sugestão: use o [ScreenToGif](https://www.screentogif.com/) para gravar um GIF da página.
-
-```
-[<img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/966a886d-b4c0-47dc-91f9-e6532b79f190" />
- ]
-<img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/2aed2b82-cfa4-4093-ab70-bdeda40f910a" />
-<img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/c246b9cb-4ad7-42d9-9089-bb12ee41a608" />
-
-
-```
+<img width="1366" height="768" alt="Hero" src="https://github.com/user-attachments/assets/966a886d-b4c0-47dc-91f9-e6532b79f190" />
+<img width="1366" height="768" alt="Serviços" src="https://github.com/user-attachments/assets/2aed2b82-cfa4-4093-ab70-bdeda40f910a" />
+<img width="1366" height="768" alt="Agendamento" src="https://github.com/user-attachments/assets/c246b9cb-4ad7-42d9-9089-bb12ee41a608" />
 
 ---
 
 ## 🚀 Tecnologias
 
 **Front-end**
-
 - HTML5
 - CSS3
 - JavaScript (Vanilla)
 
 **Back-end**
-
 - Node.js
 - Express.js
 - Mongoose
 
 **Banco de Dados**
-
 - MongoDB Atlas
 
 **Deploy**
-
-- Netlify (front-end)
+- Vercel (front-end)
 - Render (servidor)
 
 ---
@@ -56,8 +44,8 @@ Landing page profissional para captação de leads, com formulário de agendamen
 ### 1. Clone o repositório
 
 ```bash
-git clone https://github.com/victorylesson/landing_page_victory_dev_servi-os_profissional-.git
-cd landing_page_victory_dev_servi-os_profissional-
+git clone https://github.com/victorylesson/portfolio-victory-dev.git
+cd portfolio-victory-dev
 ```
 
 ### 2. Configure o servidor
@@ -118,7 +106,7 @@ O back-end está hospedado no **Render** em:
 https://victory-dev-server.onrender.com
 ```
 
-Toda vez que você fizer `git push` na branch `main`, o Netlify atualiza o site automaticamente.
+Toda vez que você fizer `git push` na branch `main`, o Vercel atualiza o site automaticamente.
 
 ---
 
@@ -153,5 +141,5 @@ Feito por **Victory de Oliveira**
 
 - 📧 victorymendestech@hotmail.com
 - 📱 (81) 9 9148-2982
-- 🌐 [victory-dev.vercel.app/] https://victory-dev.vercel.app/
+- 🌐 [victory-dev.vercel.app](https://victory-dev.vercel.app)
 - 📷 Instagram: [@victory_dev](https://instagram.com/victory_dev)
