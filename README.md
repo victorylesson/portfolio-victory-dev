@@ -1,5 +1,14 @@
 # victory_dev | Soluções Digitais
 
+# victory_dev | Soluções Digitais
+
+![Deploy](https://img.shields.io/badge/deploy-live-brightgreen)
+![HTML](https://img.shields.io/badge/HTML5-E34F26?logo=html5&logoColor=white)
+![CSS](https://img.shields.io/badge/CSS3-1572B6?logo=css3&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?logo=javascript&logoColor=black)
+![Node.js](https://img.shields.io/badge/Node.js-339933?logo=nodedotjs&logoColor=white)
+![MongoDB](https://img.shields.io/badge/MongoDB-47A248?logo=mongodb&logoColor=white)
+
 Landing page profissional para captação de leads, com formulário de agendamento integrado a banco de dados e servidor Node.js + MongoDB Atlas no back-end.
 
 ---
