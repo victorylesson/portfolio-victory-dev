@@ -4,14 +4,6 @@ Landing page profissional para captação de leads, com formulário de agendamen
 
 ---
 
-## 🖥️ Visual
-
-<img width="1366" height="768" alt="Hero" src="https://github.com/user-attachments/assets/966a886d-b4c0-47dc-91f9-e6532b79f190" />
-<img width="1366" height="768" alt="Serviços" src="https://github.com/user-attachments/assets/2aed2b82-cfa4-4093-ab70-bdeda40f910a" />
-<img width="1366" height="768" alt="Agendamento" src="https://github.com/user-attachments/assets/c246b9cb-4ad7-42d9-9089-bb12ee41a608" />
-
----
-
 ## 🚀 Tecnologias
 
 **Front-end**
