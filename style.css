@@ -1595,3 +1595,9 @@ section {
   height: 100%;
   display: block;
 }
+
+.project-overlay a {
+  position: relative;
+  z-index: 2;
+  pointer-events: all;
+}
