@@ -1774,7 +1774,7 @@ section {
   align-items: center;
   justify-content: center;
 }
-.chatbot-toggle-icon .wpp-mini {
-  width: 1.5rem;
-  height: 1.5rem;
+.chatbot-toggle-icon .bot-mini {
+  width: 1.6rem;
+  height: 1.6rem;
 }
