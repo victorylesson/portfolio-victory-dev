@@ -10,7 +10,7 @@ window.addEventListener("load", () => {
     observeReveal();
     // Mensagem inicial do chatbot com delay
     setTimeout(showChatbotWelcome, 2000);
-  }, 1800);
+  }, 600);
 });
 
 // ===== NAVBAR: scroll + mobile toggle =====
@@ -23,12 +23,16 @@ window.addEventListener("scroll", () => {
 });
 
 navToggle.addEventListener("click", () => {
-  navMobile.classList.toggle("open");
+  const isOpen = navMobile.classList.toggle("open");
+  navToggle.setAttribute("aria-expanded", isOpen);
 });
 
 // Fecha menu ao clicar em link
 navMobile.querySelectorAll("a").forEach((link) => {
-  link.addEventListener("click", () => navMobile.classList.remove("open"));
+  link.addEventListener("click", () => {
+    navMobile.classList.remove("open");
+    navToggle.setAttribute("aria-expanded", "false");
+  });
 });
 
 // ===== SMOOTH SCROLL para qualquer âncora =====
@@ -204,7 +208,6 @@ const chatResponses = {
   oi: "Olá! Seja bem-vindo à victory_dev. Como posso te ajudar hoje?",
   olá: "Olá! Seja bem-vindo à victory_dev. Como posso te ajudar hoje?",
   ola: "Olá! Seja bem-vindo à victory_dev. Como posso te ajudar hoje?",
-  ola: "Olá! Tudo bem? Pode falar, estou aqui para ajudar!",
   serviços:
     "Ofereço desenvolvimento de sites, landing pages, automações com IA, gestão de dados e suporte técnico. Qual desses você precisa?",
   servicos:

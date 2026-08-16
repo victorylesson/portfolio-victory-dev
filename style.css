@@ -684,28 +684,22 @@ section {
 .project-card:hover .project-thumb-bg {
   opacity: 1;
 }
-.project-thumb-icon {
+.project-thumb-img {
   position: relative;
   z-index: 1;
   width: 100%;
   height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  pointer-events: none;
-}
-.project-thumb-icon svg {
-  width: 52px;
-  height: 52px;
-  color: var(--neon);
-  opacity: 0.5;
+  object-fit: cover;
+  object-position: top;
+  display: block;
+  filter: saturate(0.92);
   transition:
-    opacity var(--transition),
-    transform var(--transition);
+    transform var(--transition),
+    filter var(--transition);
 }
-.project-card:hover .project-thumb-icon svg {
-  opacity: 0.75;
+.project-card:hover .project-thumb-img {
   transform: scale(1.06);
+  filter: saturate(1.05);
 }
 
 .project-overlay {
@@ -1201,10 +1195,10 @@ section {
    ========================================================= */
 .whatsapp-float {
   position: fixed;
-  bottom: 96px;
-  right: 28px;
-  width: 54px;
-  height: 54px;
+  bottom: 100px;
+  right: 32px;
+  width: 46px;
+  height: 46px;
   border-radius: 50%;
   background: #25d366;
   color: white;
@@ -1217,9 +1211,41 @@ section {
     transform var(--transition),
     box-shadow var(--transition);
 }
+.whatsapp-float svg {
+  width: 22px;
+  height: 22px;
+}
 .whatsapp-float:hover {
   transform: scale(1.1);
   box-shadow: 0 8px 32px rgba(37, 211, 102, 0.6);
+}
+
+/* Tooltip explicando a diferença dos dois botões */
+.whatsapp-float::after,
+.chatbot-toggle::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  right: calc(100% + 12px);
+  top: 50%;
+  transform: translateY(-50%) translateX(6px);
+  background: #0b1520;
+  color: #fff;
+  font-family: var(--font-body, inherit);
+  font-size: 0.78rem;
+  white-space: nowrap;
+  padding: 6px 12px;
+  border-radius: 8px;
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    opacity var(--transition),
+    transform var(--transition);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
+}
+.whatsapp-float:hover::after,
+.chatbot-toggle:hover::after {
+  opacity: 1;
+  transform: translateY(-50%) translateX(0);
 }
 
 /* =========================================================
