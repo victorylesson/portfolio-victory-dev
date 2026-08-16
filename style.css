@@ -649,7 +649,7 @@ section {
 
 .projects-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 24px;
   margin-top: 16px;
   text-align: left;
@@ -677,12 +677,34 @@ section {
 .project-thumb-bg {
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, var(--c1), var(--c2));
-  opacity: 0.85;
+  background: linear-gradient(135deg, var(--bg-3), var(--bg-2));
+  opacity: 0.9;
   transition: opacity var(--transition);
 }
 .project-card:hover .project-thumb-bg {
   opacity: 1;
+}
+.project-thumb-icon {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.project-thumb-icon svg {
+  width: 52px;
+  height: 52px;
+  color: var(--neon);
+  opacity: 0.5;
+  transition:
+    opacity var(--transition),
+    transform var(--transition);
+}
+.project-card:hover .project-thumb-icon svg {
+  opacity: 0.75;
+  transform: scale(1.06);
 }
 
 .project-overlay {
@@ -1010,6 +1032,17 @@ section {
   font-size: 0.82rem;
   color: var(--neon);
   font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.cta-chevron {
+  width: 0.9em;
+  height: 0.9em;
+  transition: transform var(--transition);
+}
+.contato-card:hover .cta-chevron {
+  transform: translateX(3px);
 }
 
 /* =========================================================
@@ -1076,7 +1109,7 @@ section {
     padding 0.3s ease;
 }
 .faq-item.open .faq-answer {
-  max-height: 200px;
+  max-height: 280px;
 }
 
 .faq-answer p {
@@ -1492,6 +1525,14 @@ section {
    RESPONSIVE
    ========================================================= */
 @media (max-width: 1024px) {
+  .nav-links,
+  .nav-cta {
+    display: none;
+  }
+  .nav-toggle {
+    display: flex;
+  }
+
   #hero {
     grid-template-columns: 1fr;
     padding: 120px 32px 80px;
@@ -1570,13 +1611,22 @@ section {
     padding: 28px 20px;
   }
   .chatbot-box {
-    width: 300px;
+    width: min(320px, calc(100vw - 40px));
+  }
+  .chatbot-wrapper {
+    right: 16px;
+    bottom: 16px;
+  }
+  .whatsapp-float {
+    right: 16px;
+    bottom: 84px;
   }
 }
 
 @media (max-width: 480px) {
   .hero-stats {
     flex-direction: column;
+    align-items: center;
     gap: 16px;
   }
   .stat-divider {
@@ -1587,6 +1637,36 @@ section {
   }
   .hero-cards {
     grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .hero-card {
+    padding: 24px 16px;
+  }
+  .container {
+    padding: 0 18px;
+  }
+  #hero {
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+  .form-wrapper {
+    padding: 24px 16px;
+  }
+  .chatbot-box {
+    width: min(300px, calc(100vw - 32px));
+  }
+}
+
+@media (max-width: 360px) {
+  .hero-title {
+    font-size: 1.7rem;
+  }
+  .services-grid,
+  .projects-grid {
+    grid-template-columns: 1fr;
+  }
+  .sobre-badge-floating {
+    right: -4px;
   }
 }
 
@@ -1600,4 +1680,100 @@ section {
   position: relative;
   z-index: 2;
   pointer-events: all;
+}
+
+/* Em telas sem hover (touch), o overlay do projeto fica sempre visível,
+   já que o toque não ativa o :hover e o botão "Ver Projeto" ficaria
+   inacessível no celular. */
+@media (hover: none) {
+  .project-overlay {
+    opacity: 1;
+    background: rgba(5, 13, 22, 0.4);
+    backdrop-filter: blur(2px);
+  }
+  .project-thumb-icon svg {
+    opacity: 0.35;
+  }
+}
+
+/* =========================================================
+   ICONES (substituindo emojis)
+   ========================================================= */
+.icon-inline {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.icon-inline svg {
+  width: 1em;
+  height: 1em;
+  flex-shrink: 0;
+}
+
+.card-icon svg,
+.service-icon svg {
+  width: 1em;
+  height: 1em;
+  display: block;
+  margin: 0 auto;
+  color: var(--neon);
+}
+.card-icon,
+.service-icon {
+  display: flex;
+  justify-content: center;
+}
+
+.dif-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: var(--neon-dim);
+  color: var(--neon);
+  flex-shrink: 0;
+}
+.dif-icon svg {
+  width: 1.3rem;
+  height: 1.3rem;
+}
+
+.contato-icon svg {
+  width: 1.6rem;
+  height: 1.6rem;
+  display: block;
+  margin: 0 auto;
+  color: var(--neon);
+}
+.contato-icon {
+  display: flex;
+  justify-content: center;
+}
+
+.success-icon svg {
+  width: 1.8rem;
+  height: 1.8rem;
+}
+
+.chatbot-close svg {
+  width: 1rem;
+  height: 1rem;
+  display: block;
+}
+
+#chatbotSend svg {
+  width: 1.1rem;
+  height: 1.1rem;
+}
+
+.chatbot-toggle-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.chatbot-toggle-icon .wpp-mini {
+  width: 1.5rem;
+  height: 1.5rem;
 }
