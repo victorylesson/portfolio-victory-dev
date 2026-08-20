@@ -661,6 +661,64 @@ document.querySelectorAll(".hero-card").forEach((card) => {
 });
 
 // =========================================================
+// CLIQUE NOS HERO CARDS: leva até o serviço correspondente
+// (Sites -> Desenvolvimento de Sites, Automações -> Automação
+// de Processos, Dados -> Gestão de Dados, Suporte -> Suporte
+// Técnico), com animação no card clicado e no destino.
+// =========================================================
+
+document.querySelectorAll(".hero-card").forEach((card) => {
+  const targetSelector = card.getAttribute("data-scroll-target");
+
+  if (!targetSelector) return;
+
+  const goToService = () => {
+    const targetEl = document.querySelector(targetSelector);
+
+    if (!targetEl) return;
+
+    // Reseta o transform de hover/tilt para a animação de clique não conflitar
+    card.style.transform = "";
+
+    // Animação de clique no card
+    card.classList.remove("is-clicked");
+    void card.offsetWidth; // reinicia a animação se clicado várias vezes seguidas
+    card.classList.add("is-clicked");
+
+    card.addEventListener(
+      "animationend",
+      () => card.classList.remove("is-clicked"),
+      { once: true },
+    );
+
+    // Rola suavemente até a seção do serviço
+    targetEl.scrollIntoView({ behavior: "smooth", block: "start" });
+
+    // Destaca o card de serviço ao chegar
+    setTimeout(() => {
+      targetEl.classList.remove("is-highlighted");
+      void targetEl.offsetWidth;
+      targetEl.classList.add("is-highlighted");
+
+      targetEl.addEventListener(
+        "animationend",
+        () => targetEl.classList.remove("is-highlighted"),
+        { once: true },
+      );
+    }, 350);
+  };
+
+  card.addEventListener("click", goToService);
+
+  card.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      goToService();
+    }
+  });
+});
+
+// =========================================================
 // ACTIVE NAV LINK POR SEÇÃO
 // =========================================================
 
