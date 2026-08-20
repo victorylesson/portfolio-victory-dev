@@ -705,16 +705,19 @@ section {
 .project-overlay {
   position: absolute;
   inset: 0;
+  z-index: 2;
   display: flex;
   align-items: center;
   justify-content: center;
   opacity: 0;
+  pointer-events: none;
   transition: opacity var(--transition);
   background: rgba(5, 13, 22, 0.5);
   backdrop-filter: blur(4px);
 }
 .project-card:hover .project-overlay {
   opacity: 1;
+  pointer-events: auto;
 }
 
 .project-info {
@@ -1715,6 +1718,7 @@ section {
 @media (hover: none) {
   .project-overlay {
     opacity: 1;
+    pointer-events: auto;
     background: rgba(5, 13, 22, 0.4);
     backdrop-filter: blur(2px);
   }
