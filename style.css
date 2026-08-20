@@ -668,10 +668,10 @@ section {
   border-color: var(--border-h);
   transform: translateY(-6px);
 }
-
 .project-thumb {
   position: relative;
-  height: 180px;
+  aspect-ratio: 760 / 338;
+  min-height: 180px;
   overflow: hidden;
 }
 .project-thumb-bg {
