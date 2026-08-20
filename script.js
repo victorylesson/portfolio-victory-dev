@@ -692,7 +692,7 @@ document.querySelectorAll(".hero-card").forEach((card) => {
     );
 
     // Rola suavemente até a seção do serviço
-    targetEl.scrollIntoView({ behavior: "smooth", block: "start" });
+    targetEl.scrollIntoView({ behavior: "smooth", block: "center" });
 
     // Destaca o card de serviço ao chegar
     setTimeout(() => {

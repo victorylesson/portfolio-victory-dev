@@ -627,6 +627,7 @@ section {
   border-radius: var(--radius-lg);
   padding: 32px;
   backdrop-filter: blur(12px);
+  scroll-margin-top: 100px;
   transition:
     border-color var(--transition),
     transform var(--transition),
@@ -1454,7 +1455,7 @@ section {
   height: 42px;
   border-radius: 50%;
   overflow: hidden;
-  background: #ffffff;
+  background: #050d16;
   border: 1.5px solid var(--border-h);
   display: flex;
   align-items: center;
