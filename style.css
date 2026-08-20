@@ -1328,8 +1328,6 @@ section {
     transform var(--transition),
     box-shadow var(--transition);
   position: relative;
-  padding: 0;
-  overflow: hidden;
   flex-shrink: 0;
 }
 .chatbot-toggle:hover {
@@ -1905,14 +1903,8 @@ section {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 100%;
-  height: 100%;
 }
-.chatbot-toggle-img {
-  width: 78%;
-  height: 78%;
-  object-fit: contain;
-  display: block;
-  background: transparent;
-  pointer-events: none;
+.chatbot-toggle-icon .bot-mini {
+  width: 1.6rem;
+  height: 1.6rem;
 }
