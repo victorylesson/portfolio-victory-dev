@@ -1,3 +1,4 @@
+```
 /* =========================================================
    victory_dev — style.css
    Dark Tech Theme | Glassmorphism | Neon Accents
@@ -1380,19 +1381,25 @@ section {
   border-bottom: 1px solid var(--border);
 }
 .chatbot-avatar {
-  width: 38px;
-  height: 38px;
+  width: 42px;
+  height: 42px;
   border-radius: 50%;
-  background: var(--neon-dim);
+  overflow: hidden;
+  background: #000;
   border: 1.5px solid var(--border-h);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: var(--font-mono);
-  font-size: 0.8rem;
-  font-weight: 700;
-  color: var(--neon);
   flex-shrink: 0;
+  box-shadow: 0 0 14px rgba(0, 229, 160, 0.18);
+}
+
+.chatbot-avatar img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: center;
 }
 .chatbot-header strong {
   display: block;

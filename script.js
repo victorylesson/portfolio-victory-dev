@@ -6,8 +6,10 @@
 window.addEventListener("load", () => {
   setTimeout(() => {
     document.getElementById("loader").classList.add("done");
+
     // Inicia reveal após loader
     observeReveal();
+
     // Mensagem inicial do chatbot com delay
     setTimeout(showChatbotWelcome, 2000);
   }, 600);
@@ -39,9 +41,14 @@ navMobile.querySelectorAll("a").forEach((link) => {
 document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
   anchor.addEventListener("click", (e) => {
     const target = document.querySelector(anchor.getAttribute("href"));
+
     if (target) {
       e.preventDefault();
-      target.scrollIntoView({ behavior: "smooth", block: "start" });
+
+      target.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
     }
   });
 });
@@ -54,12 +61,16 @@ function observeReveal() {
         if (entry.isIntersecting) {
           // Staggered delay por ordem de aparição
           entry.target.style.transitionDelay = `${(i % 4) * 0.1}s`;
+
           entry.target.classList.add("visible");
+
           observer.unobserve(entry.target);
         }
       });
     },
-    { threshold: 0.12 },
+    {
+      threshold: 0.12,
+    },
   );
 
   document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
@@ -77,7 +88,9 @@ document.querySelectorAll(".faq-question").forEach((btn) => {
       .forEach((i) => i.classList.remove("open"));
 
     // Abre o clicado se estava fechado
-    if (!isOpen) item.classList.add("open");
+    if (!isOpen) {
+      item.classList.add("open");
+    }
   });
 });
 
@@ -90,110 +103,152 @@ const formSuccess = document.getElementById("formSuccess");
 function validateField(id, errorId, message) {
   const field = document.getElementById(id);
   const error = document.getElementById(errorId);
+
+  if (!field || !error) return false;
+
   const value = field.value.trim();
 
   if (!value) {
     error.textContent = message;
     field.classList.add("invalid");
+
     return false;
   }
 
   if (id === "email" && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
     error.textContent = "Digite um e-mail válido.";
     field.classList.add("invalid");
+
     return false;
   }
 
   if (id === "whatsapp" && value.replace(/\D/g, "").length < 10) {
     error.textContent = "Digite um WhatsApp válido.";
     field.classList.add("invalid");
+
     return false;
   }
 
   error.textContent = "";
   field.classList.remove("invalid");
+
   return true;
 }
 
 // Limpa erro ao digitar
 ["nome", "email", "whatsapp", "nicho", "servico"].forEach((id) => {
   const el = document.getElementById(id);
+
   if (el) {
     el.addEventListener("input", () => {
       el.classList.remove("invalid");
+
       const errEl = document.getElementById(id + "Error");
-      if (errEl) errEl.textContent = "";
+
+      if (errEl) {
+        errEl.textContent = "";
+      }
     });
   }
 });
 
-form.addEventListener("submit", async (e) => {
-  e.preventDefault();
+if (form) {
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
 
-  const v1 = validateField("nome", "nomeError", "Seu nome é obrigatório.");
-  const v2 = validateField("email", "emailError", "Seu e-mail é obrigatório.");
-  const v3 = validateField(
-    "whatsapp",
-    "whatsappError",
-    "WhatsApp é obrigatório.",
-  );
-  const v4 = validateField("nicho", "nichoError", "Selecione seu segmento.");
-  const v5 = validateField(
-    "servico",
-    "servicoError",
-    "Selecione o que precisa.",
-  );
+    const v1 = validateField("nome", "nomeError", "Seu nome é obrigatório.");
 
-  if (!v1 || !v2 || !v3 || !v4 || !v5) return;
+    const v2 = validateField(
+      "email",
+      "emailError",
+      "Seu e-mail é obrigatório.",
+    );
 
-  const btn = document.getElementById("btnText");
-  btn.textContent = "Enviando...";
+    const v3 = validateField(
+      "whatsapp",
+      "whatsappError",
+      "WhatsApp é obrigatório.",
+    );
 
-  const dados = {
-    nome: document.getElementById("nome").value,
-    email: document.getElementById("email").value,
-    whatsapp: document.getElementById("whatsapp").value,
-    nicho: document.getElementById("nicho").value,
-    servico: document.getElementById("servico").value,
-    mensagem: document.getElementById("mensagem").value,
-  };
+    const v4 = validateField("nicho", "nichoError", "Selecione seu segmento.");
 
-  try {
-    const resposta = await fetch(`${API_URL}/leads`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(dados),
-    });
+    const v5 = validateField(
+      "servico",
+      "servicoError",
+      "Selecione o que precisa.",
+    );
 
-    if (resposta.ok) {
-      form.style.display = "none";
-      formSuccess.classList.remove("hidden");
-    } else {
-      btn.textContent = "Enviar";
-      alert("Erro ao enviar. Tente novamente.");
+    if (!v1 || !v2 || !v3 || !v4 || !v5) {
+      return;
     }
-  } catch (erro) {
-    console.error("Erro ao conectar com o servidor:", erro);
-    btn.textContent = "Enviar";
-    alert("Erro ao conectar. Tente novamente.");
-  }
-});
 
-// Formata telefone automaticamente
+    const btn = document.getElementById("btnText");
+
+    if (btn) {
+      btn.textContent = "Enviando...";
+    }
+
+    const dados = {
+      nome: document.getElementById("nome").value,
+      email: document.getElementById("email").value,
+      whatsapp: document.getElementById("whatsapp").value,
+      nicho: document.getElementById("nicho").value,
+      servico: document.getElementById("servico").value,
+      mensagem: document.getElementById("mensagem").value,
+    };
+
+    try {
+      const resposta = await fetch(`${API_URL}/leads`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(dados),
+      });
+
+      if (resposta.ok) {
+        form.style.display = "none";
+        formSuccess.classList.remove("hidden");
+      } else {
+        if (btn) {
+          btn.textContent = "Enviar";
+        }
+
+        alert("Erro ao enviar. Tente novamente.");
+      }
+    } catch (erro) {
+      console.error("Erro ao conectar com o servidor:", erro);
+
+      if (btn) {
+        btn.textContent = "Enviar";
+      }
+
+      alert("Erro ao conectar. Tente novamente.");
+    }
+  });
+}
+
+// ===== FORMATA TELEFONE AUTOMATICAMENTE =====
 const whatsInput = document.getElementById("whatsapp");
+
 if (whatsInput) {
   whatsInput.addEventListener("input", () => {
     let v = whatsInput.value.replace(/\D/g, "").slice(0, 11);
+
     if (v.length > 6) {
       v = `(${v.slice(0, 2)}) ${v[2]} ${v.slice(3, 7)}-${v.slice(7)}`;
     } else if (v.length > 2) {
       v = `(${v.slice(0, 2)}) ${v.slice(2)}`;
     }
+
     whatsInput.value = v;
   });
 }
 
-// ===== CHATBOT =====
+// =========================================================
+// CHATBOT
+// =========================================================
+
 const chatbotToggle = document.getElementById("chatbotToggle");
 const chatbotBox = document.getElementById("chatbotBox");
 const chatbotClose = document.getElementById("chatbotClose");
@@ -203,53 +258,130 @@ const chatbotSend = document.getElementById("chatbotSend");
 const quickRepliesEl = document.getElementById("quickReplies");
 const chatbotBadge = document.getElementById("chatbotBadge");
 
-// Banco de respostas
+// =========================================================
+// BANCO DE RESPOSTAS
+// =========================================================
+
 const chatResponses = {
-  oi: "Olá! Seja bem-vindo à victory_dev. Como posso te ajudar hoje?",
-  olá: "Olá! Seja bem-vindo à victory_dev. Como posso te ajudar hoje?",
-  ola: "Olá! Seja bem-vindo à victory_dev. Como posso te ajudar hoje?",
+  oi: "Olá! Sou o assistente da victory_dev. Posso ajudar você a encontrar a melhor solução para o seu projeto. O que você está procurando?",
+
+  olá: "Olá! Sou o assistente da victory_dev. Posso ajudar você a encontrar a melhor solução para o seu projeto. O que você está procurando?",
+
+  ola: "Olá! Sou o assistente da victory_dev. Posso ajudar você a encontrar a melhor solução para o seu projeto. O que você está procurando?",
+
   serviços:
-    "Ofereço desenvolvimento de sites, landing pages, automações com IA, gestão de dados e suporte técnico. Qual desses você precisa?",
+    "A victory_dev trabalha com desenvolvimento de sites, landing pages, automações, gestão de dados e suporte técnico. Se você me contar o que precisa, posso indicar a solução mais adequada.",
+
   servicos:
-    "Ofereço desenvolvimento de sites, landing pages, automações com IA, gestão de dados e suporte técnico. Qual desses você precisa?",
-  site: "Desenvolvo sites modernos, rápidos e focados em conversão. Cada projeto é 100% personalizado. Quer agendar uma conversa para falar sobre o seu?",
+    "A victory_dev trabalha com desenvolvimento de sites, landing pages, automações, gestão de dados e suporte técnico. Se você me contar o que precisa, posso indicar a solução mais adequada.",
+
+  site: "Desenvolvo sites modernos, rápidos, responsivos e pensados para gerar resultados. Cada projeto é personalizado de acordo com o negócio. Se quiser, posso orientar você sobre qual tipo de site faz mais sentido.",
+
+  sites:
+    "Desenvolvo sites modernos, rápidos, responsivos e pensados para gerar resultados. Cada projeto é personalizado de acordo com o negócio. Se quiser, posso orientar você sobre qual tipo de site faz mais sentido.",
+
   preço:
-    "Os valores variam conforme o escopo. Landing pages costumam ser uma ótima escolha para o início. O mais bacana é você agendar uma consulta gratuita e eu te faço um orçamento personalizado!",
+    "O valor depende do tipo e da complexidade do projeto. Landing pages costumam ser uma opção mais enxuta, enquanto sites completos e soluções sob medida são avaliados individualmente. Se quiser, posso orientar você sobre o próximo passo.",
+
   preco:
-    "Os valores variam conforme o escopo. Landing pages costumam ser uma ótima escolha para o início. O mais bacana é você agendar uma consulta gratuita e eu te faço um orçamento personalizado!",
+    "O valor depende do tipo e da complexidade do projeto. Landing pages costumam ser uma opção mais enxuta, enquanto sites completos e soluções sob medida são avaliados individualmente. Se quiser, posso orientar você sobre o próximo passo.",
+
   valor:
-    "Cada projeto tem um orçamento personalizado. Me conta o que você precisa e te passo um valor exato. Pode agendar uma reunião gratuita pelo formulário da página!",
+    "Cada projeto recebe um orçamento personalizado de acordo com o que precisa ser desenvolvido. Se você me explicar brevemente sua ideia, posso orientar sobre a solução mais adequada.",
+
+  orçamento:
+    "Cada projeto recebe um orçamento personalizado de acordo com o que precisa ser desenvolvido. Se você me explicar brevemente sua ideia, posso orientar sobre a solução mais adequada.",
+
+  orcamento:
+    "Cada projeto recebe um orçamento personalizado de acordo com o que precisa ser desenvolvido. Se você me explicar brevemente sua ideia, posso orientar sobre a solução mais adequada.",
+
   prazo:
-    "Landing pages prontas em 3 a 5 dias úteis. Sites completos de 7 a 15 dias. Sempre cumprido o combinado.",
+    "Landing pages costumam ficar prontas em 3 a 5 dias úteis. Sites completos levam aproximadamente 7 a 15 dias, dependendo do projeto e das funcionalidades.",
+
   automação:
-    "Com automações você economiza tempo, reduz erros e atende clientes 24h sem precisar de equipe. Posso integrar com WhatsApp, Instagram e sistemas que você já usa.",
+    "As automações ajudam a reduzir tarefas repetitivas, diminuir erros e economizar tempo. Posso integrar processos com WhatsApp, Instagram e outros sistemas que você já utiliza.",
+
   automacao:
-    "Com automações você economiza tempo, reduz erros e atende clientes 24h sem precisar de equipe. Posso integrar com WhatsApp, Instagram e sistemas que você já usa.",
+    "As automações ajudam a reduzir tarefas repetitivas, diminuir erros e economizar tempo. Posso integrar processos com WhatsApp, Instagram e outros sistemas que você já utiliza.",
+
+  automações:
+    "As automações ajudam a reduzir tarefas repetitivas, diminuir erros e economizar tempo. Posso integrar processos com WhatsApp, Instagram e outros sistemas que você já utiliza.",
+
+  automacoes:
+    "As automações ajudam a reduzir tarefas repetitivas, diminuir erros e economizar tempo. Posso integrar processos com WhatsApp, Instagram e outros sistemas que você já utiliza.",
+
+  dados:
+    "A gestão de dados pode incluir dashboards, relatórios, organização de informações e integração entre ferramentas. Se você me explicar o que precisa acompanhar, posso indicar uma solução.",
+
+  dashboard:
+    "A gestão de dados pode incluir dashboards, relatórios, organização de informações e integração entre ferramentas. Se você me explicar o que precisa acompanhar, posso indicar uma solução.",
+
+  dashboards:
+    "A gestão de dados pode incluir dashboards, relatórios, organização de informações e integração entre ferramentas. Se você me explicar o que precisa acompanhar, posso indicar uma solução.",
+
   contato:
-    "Pode me chamar no WhatsApp (81) 9 9148-2982, por e-mail em victorymendestech@hotmail.com ou pelo Instagram @victory_dev!",
+    "Você pode entrar em contato pelo WhatsApp, pelo e-mail ou pelo formulário de agendamento da página. Se preferir, posso orientar você para o canal mais adequado.",
+
   whatsapp:
-    "Clica no botão verde no canto da tela ou acessa: wa.me/5581991482982. Respondo rápido!",
+    "Você pode utilizar o botão verde de WhatsApp no canto da página para falar diretamente com a victory_dev.",
+
   agendar:
-    "Preencha o formulário de agendamento aqui na página e entro em contato em até 2 horas para confirmar. É totalmente gratuito!",
+    "Você pode preencher o formulário de agendamento aqui na página. A conversa é gratuita e serve para entender seu negócio, sua necessidade e definir a melhor solução.",
+
   agendamento:
-    "Preencha o formulário de agendamento aqui na página e entro em contato em até 2 horas para confirmar. É totalmente gratuito!",
+    "Você pode preencher o formulário de agendamento aqui na página. A conversa é gratuita e serve para entender seu negócio, sua necessidade e definir a melhor solução.",
+
+  reunião:
+    "Você pode preencher o formulário de agendamento aqui na página. A conversa é gratuita e serve para entender seu negócio, sua necessidade e definir a melhor solução.",
+
+  reuniao:
+    "Você pode preencher o formulário de agendamento aqui na página. A conversa é gratuita e serve para entender seu negócio, sua necessidade e definir a melhor solução.",
+
   projetos:
-    "Já conclui projetos de clínicas, restaurantes, escritórios, academias, e-commerces e muito mais. Dá uma olhada nos cases na seção Portfólio!",
+    "Você pode conhecer alguns dos projetos desenvolvidos na seção Portfólio. Há trabalhos para diferentes segmentos, como clínicas, restaurantes e escritórios.",
+
+  projeto:
+    "Você pode conhecer alguns dos projetos desenvolvidos na seção Portfólio. Há trabalhos para diferentes segmentos, como clínicas, restaurantes e escritórios.",
+
   suporte:
-    "Todo projeto inclui 30 dias de suporte gratuito após a entrega. Também ofereço planos mensais de manutenção.",
-  obrigado: "Disponha! Se precisar de mais alguma coisa, é só falar.",
-  tchau: "Até mais! Qualquer dúvida é só chamar. Bons negócios!",
+    "Todo projeto inclui 30 dias de suporte gratuito após a entrega. Depois desse período, também existem opções de manutenção e suporte contínuo.",
+
+  manutenção:
+    "Depois do período inicial de suporte, também existem opções de manutenção e suporte contínuo para manter o projeto atualizado e funcionando corretamente.",
+
+  manutencao:
+    "Depois do período inicial de suporte, também existem opções de manutenção e suporte contínuo para manter o projeto atualizado e funcionando corretamente.",
+
+  obrigado:
+    "Por nada. Se precisar de mais alguma informação sobre o projeto, estou à disposição.",
+
+  obrigada:
+    "Por nada. Se precisar de mais alguma informação sobre o projeto, estou à disposição.",
+
+  tchau: "Até mais. Quando quiser conversar sobre seu projeto, é só chamar.",
 };
 
+// =========================================================
+// RESPOSTA PADRÃO
+// =========================================================
+
 const defaultResponse =
-  "Não entendi muito bem. Mas fica à vontade para me chamar no WhatsApp (81) 9 9148-2982 ou preencher o formulário de agendamento que entro em contato rapidinho!";
+  "Não consegui entender exatamente o que você precisa. Pode explicar um pouco mais sobre o seu projeto? Se preferir, também posso orientar você sobre sites, automações, dados, preços ou agendamento.";
+
+// =========================================================
+// RESPOSTAS RÁPIDAS
+// =========================================================
 
 const quickReplies = [
   "Quero um site",
-  "Qual o preço?",
-  "Agendar reunião",
-  "Contato",
+  "Quero uma automação",
+  "Preciso de dados",
+  "Quero saber o preço",
 ];
+
+// =========================================================
+// HORÁRIO
+// =========================================================
 
 function getTime() {
   return new Date().toLocaleTimeString("pt-BR", {
@@ -258,46 +390,77 @@ function getTime() {
   });
 }
 
+// =========================================================
+// ADICIONAR MENSAGEM
+// =========================================================
+
 function addMessage(text, type) {
+  if (!chatbotMessages) return;
+
   const msg = document.createElement("div");
+
   msg.className = `chat-msg ${type}`;
 
   const bubble = document.createElement("div");
+
   bubble.className = "chat-bubble";
   bubble.textContent = text;
 
   const time = document.createElement("span");
+
   time.className = "chat-time";
   time.textContent = getTime();
 
   msg.appendChild(bubble);
   msg.appendChild(time);
+
   chatbotMessages.appendChild(msg);
+
   chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
 }
 
+// =========================================================
+// INDICADOR DE DIGITAÇÃO
+// =========================================================
+
 function showTyping() {
+  if (!chatbotMessages) return;
+
   const typing = document.createElement("div");
+
   typing.className = "chat-msg bot";
   typing.id = "typingIndicator";
 
   const bubble = document.createElement("div");
+
   bubble.className = "chat-bubble";
 
   const dots = document.createElement("div");
+
   dots.className = "typing-dots";
+
   dots.innerHTML = "<span></span><span></span><span></span>";
 
   bubble.appendChild(dots);
+
   typing.appendChild(bubble);
+
   chatbotMessages.appendChild(typing);
+
   chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
 }
 
 function removeTyping() {
   const typing = document.getElementById("typingIndicator");
-  if (typing) typing.remove();
+
+  if (typing) {
+    typing.remove();
+  }
 }
+
+// =========================================================
+// ENCONTRA RESPOSTA
+// =========================================================
 
 function getBotResponse(input) {
   const normalized = input
@@ -307,110 +470,200 @@ function getBotResponse(input) {
     .trim();
 
   for (const key of Object.keys(chatResponses)) {
-    if (normalized.includes(key)) return chatResponses[key];
+    const normalizedKey = key
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "");
+
+    if (normalized.includes(normalizedKey)) {
+      return chatResponses[key];
+    }
   }
+
   return defaultResponse;
 }
 
+// =========================================================
+// RESPOSTA DO BOT
+// =========================================================
+
 function botReply(text) {
   showTyping();
+
   setTimeout(
     () => {
       removeTyping();
+
       addMessage(text, "bot");
+
       renderQuickReplies();
     },
     900 + Math.random() * 400,
   );
 }
 
+// =========================================================
+// ENVIA MENSAGEM DO USUÁRIO
+// =========================================================
+
 function sendUserMessage(text) {
-  if (!text.trim()) return;
-  addMessage(text, "user");
+  if (!text || !text.trim()) {
+    return;
+  }
+
+  addMessage(text.trim(), "user");
+
   chatbotInput.value = "";
+
   clearQuickReplies();
+
   const response = getBotResponse(text);
+
   botReply(response);
 }
 
+// =========================================================
+// RESPOSTAS RÁPIDAS
+// =========================================================
+
 function renderQuickReplies() {
+  if (!quickRepliesEl) return;
+
   clearQuickReplies();
+
   quickReplies.forEach((label) => {
     const btn = document.createElement("button");
+
     btn.className = "quick-reply-btn";
+
+    btn.type = "button";
+
     btn.textContent = label;
-    btn.addEventListener("click", () => sendUserMessage(label));
+
+    btn.addEventListener("click", () => {
+      sendUserMessage(label);
+    });
+
     quickRepliesEl.appendChild(btn);
   });
 }
 
 function clearQuickReplies() {
+  if (!quickRepliesEl) return;
+
   quickRepliesEl.innerHTML = "";
 }
 
+// =========================================================
+// BADGE / BOAS-VINDAS
+// =========================================================
+
 function showChatbotWelcome() {
   // Não mostra se o bot já foi aberto
-  if (chatbotBox.classList.contains("open")) return;
-  chatbotBadge.classList.remove("hidden");
+  if (chatbotBox && chatbotBox.classList.contains("open")) {
+    return;
+  }
+
+  if (chatbotBadge) {
+    chatbotBadge.classList.remove("hidden");
+  }
 }
 
-// Abre/fecha chatbot
-chatbotToggle.addEventListener("click", () => {
-  const isOpen = chatbotBox.classList.contains("open");
-  if (!isOpen) {
-    chatbotBox.classList.add("open");
-    chatbotBadge.classList.add("hidden");
-    // Mensagem de boas-vindas na primeira abertura
-    if (chatbotMessages.children.length === 0) {
-      setTimeout(() => {
-        addMessage(
-          "Olá! Sou o assistente de victory_dev. Como posso te ajudar?",
-          "bot",
-        );
-        renderQuickReplies();
-      }, 400);
+// =========================================================
+// ABRE / FECHA CHATBOT
+// =========================================================
+
+if (chatbotToggle) {
+  chatbotToggle.addEventListener("click", () => {
+    const isOpen = chatbotBox.classList.contains("open");
+
+    if (!isOpen) {
+      chatbotBox.classList.add("open");
+
+      if (chatbotBadge) {
+        chatbotBadge.classList.add("hidden");
+      }
+
+      // Mensagem de boas-vindas na primeira abertura
+      if (chatbotMessages && chatbotMessages.children.length === 0) {
+        setTimeout(() => {
+          addMessage(
+            "Olá! Sou o assistente da victory_dev. Posso ajudar você a encontrar a melhor solução para o seu projeto. O que você está procurando?",
+            "bot",
+          );
+
+          renderQuickReplies();
+        }, 400);
+      }
+    } else {
+      chatbotBox.classList.remove("open");
     }
-  } else {
+  });
+}
+
+if (chatbotClose) {
+  chatbotClose.addEventListener("click", () => {
     chatbotBox.classList.remove("open");
-  }
-});
+  });
+}
 
-chatbotClose.addEventListener("click", () => {
-  chatbotBox.classList.remove("open");
-});
+// =========================================================
+// ENVIO DA MENSAGEM
+// =========================================================
 
-// Envio de mensagem
-chatbotSend.addEventListener("click", () =>
-  sendUserMessage(chatbotInput.value),
-);
-chatbotInput.addEventListener("keydown", (e) => {
-  if (e.key === "Enter") sendUserMessage(chatbotInput.value);
-});
+if (chatbotSend) {
+  chatbotSend.addEventListener("click", () => {
+    sendUserMessage(chatbotInput.value);
+  });
+}
 
-// ===== ANIMAÇÃO DE HOVER NOS HERO CARDS =====
+if (chatbotInput) {
+  chatbotInput.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+
+      sendUserMessage(chatbotInput.value);
+    }
+  });
+}
+
+// =========================================================
+// ANIMAÇÃO DE HOVER NOS HERO CARDS
+// =========================================================
+
 document.querySelectorAll(".hero-card").forEach((card) => {
   card.addEventListener("mousemove", (e) => {
     const rect = card.getBoundingClientRect();
+
     const x = ((e.clientX - rect.left) / rect.width - 0.5) * 14;
+
     const y = ((e.clientY - rect.top) / rect.height - 0.5) * 14;
+
     card.style.transform = `perspective(400px) rotateY(${x}deg) rotateX(${-y}deg) translateY(-4px)`;
   });
+
   card.addEventListener("mouseleave", () => {
     card.style.transform = "";
   });
 });
 
-// ===== ACTIVE NAV LINK POR SEÇÃO =====
+// =========================================================
+// ACTIVE NAV LINK POR SEÇÃO
+// =========================================================
+
 const sections = document.querySelectorAll("section[id]");
+
 const navLinks = document.querySelectorAll(".nav-links a");
 
 window.addEventListener("scroll", () => {
   let current = "";
+
   sections.forEach((section) => {
     if (window.scrollY >= section.offsetTop - 120) {
       current = section.getAttribute("id");
     }
   });
+
   navLinks.forEach((link) => {
     link.style.color =
       link.getAttribute("href") === `#${current}` ? "var(--neon)" : "";
