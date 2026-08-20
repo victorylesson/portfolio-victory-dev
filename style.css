@@ -671,8 +671,7 @@ section {
 
 .project-thumb {
   position: relative;
-  aspect-ratio: 760 / 338;
-  min-height: 180px;
+  height: 180px;
   overflow: hidden;
 }
 .project-thumb-bg {
@@ -1693,17 +1692,6 @@ section {
 }
 
 @media (max-width: 480px) {
-  .project-thumb {
-    aspect-ratio: 16 / 9;
-    min-height: 0;
-  }
-
-  .project-thumb-img {
-    object-position: top center;
-  }
-}
-
-@media (max-width: 480px) {
   .hero-stats {
     flex-direction: column;
     align-items: center;
@@ -1776,10 +1764,10 @@ section {
   .project-overlay .btn-sm {
     transform: translateY(0) scale(1);
     opacity: 1;
-    background: var(--neon);
-    color: var(--bg);
+    background: transparent;
+    color: var(--neon);
     border-color: var(--neon);
-    box-shadow: var(--neon-glow);
+    box-shadow: none;
   }
 
   .project-thumb-icon svg {
