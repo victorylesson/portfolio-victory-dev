@@ -1295,13 +1295,20 @@ section {
    ========================================================= */
 .chatbot-wrapper {
   position: fixed;
-  bottom: 28px;
-  right: 28px;
+  bottom: max(28px, env(safe-area-inset-bottom));
+  right: max(28px, env(safe-area-inset-right));
   z-index: 300;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
   gap: 12px;
+  max-width: calc(100vw - 24px);
+}
+
+/* Quando o chat está aberto, o botão flutuante fica completamente
+   escondido (não some só visualmente: sai do fluxo/alcance de clique) */
+.chatbot-wrapper.chat-open .chatbot-toggle {
+  display: none;
 }
 
 .chatbot-toggle {
@@ -1321,6 +1328,9 @@ section {
     transform var(--transition),
     box-shadow var(--transition);
   position: relative;
+  padding: 0;
+  overflow: hidden;
+  flex-shrink: 0;
 }
 .chatbot-toggle:hover {
   transform: scale(1.08);
@@ -1347,7 +1357,10 @@ section {
 }
 
 .chatbot-box {
-  width: 340px;
+  width: min(340px, calc(100vw - 24px));
+  height: min(520px, calc(100dvh - 120px));
+  max-height: calc(100dvh - 24px);
+  min-height: 0;
   border-radius: var(--radius-lg);
   background: var(--bg-2);
   border: 1px solid var(--border-h);
@@ -1378,13 +1391,14 @@ section {
   padding: 16px 20px;
   background: var(--bg-3);
   border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
 }
 .chatbot-avatar {
   width: 42px;
   height: 42px;
   border-radius: 50%;
   overflow: hidden;
-  background: #000;
+  background: #ffffff;
   border: 1.5px solid var(--border-h);
   display: flex;
   align-items: center;
@@ -1397,7 +1411,7 @@ section {
   width: 100%;
   height: 100%;
   display: block;
-  object-fit: cover;
+  object-fit: contain;
   object-position: center;
 }
 .chatbot-header strong {
@@ -1424,9 +1438,11 @@ section {
 }
 
 .chatbot-messages {
-  flex: 1;
-  max-height: 320px;
+  flex: 1 1 auto;
+  min-height: 0;
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
   padding: 20px;
   display: flex;
   flex-direction: column;
@@ -1528,6 +1544,9 @@ section {
   flex-wrap: wrap;
   gap: 8px;
   padding: 0 16px 12px;
+  flex-shrink: 0;
+  max-height: 35dvh;
+  overflow-y: auto;
 }
 .quick-reply-btn {
   background: var(--neon-dim);
@@ -1551,11 +1570,13 @@ section {
 .chatbot-input-row {
   display: flex;
   gap: 8px;
-  padding: 12px 16px 16px;
+  padding: 12px 16px calc(16px + env(safe-area-inset-bottom));
   border-top: 1px solid var(--border);
+  flex-shrink: 0;
 }
 #chatbotInput {
   flex: 1;
+  min-width: 0;
   background: rgba(0, 0, 0, 0.3);
   border: 1px solid var(--border);
   border-radius: 50px;
@@ -1686,11 +1707,12 @@ section {
     padding: 28px 20px;
   }
   .chatbot-box {
-    width: min(320px, calc(100vw - 40px));
+    width: min(320px, calc(100vw - 32px));
+    height: min(500px, calc(100dvh - 110px));
   }
   .chatbot-wrapper {
-    right: 16px;
-    bottom: 16px;
+    right: max(16px, env(safe-area-inset-right));
+    bottom: max(16px, env(safe-area-inset-bottom));
   }
   .whatsapp-float {
     right: 16px;
@@ -1727,8 +1749,19 @@ section {
   .form-wrapper {
     padding: 24px 16px;
   }
+  .chatbot-wrapper {
+    left: 12px;
+    right: 12px;
+    align-items: stretch;
+    max-width: 100vw;
+  }
   .chatbot-box {
-    width: min(300px, calc(100vw - 32px));
+    width: 100%;
+    height: min(78dvh, 480px);
+    max-height: calc(100dvh - 20px);
+  }
+  .chatbot-toggle {
+    align-self: flex-end;
   }
 }
 
@@ -1855,12 +1888,31 @@ section {
   height: 1.1rem;
 }
 
+@media (max-height: 560px) {
+  .chatbot-box {
+    height: min(90dvh, 420px);
+    max-height: calc(100dvh - 16px);
+  }
+  .chatbot-messages {
+    padding: 12px 20px;
+  }
+  .chatbot-header {
+    padding: 10px 20px;
+  }
+}
+
 .chatbot-toggle-icon {
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 100%;
+  height: 100%;
 }
-.chatbot-toggle-icon .bot-mini {
-  width: 1.6rem;
-  height: 1.6rem;
+.chatbot-toggle-img {
+  width: 78%;
+  height: 78%;
+  object-fit: contain;
+  display: block;
+  background: transparent;
+  pointer-events: none;
 }

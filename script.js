@@ -249,6 +249,7 @@ if (whatsInput) {
 // CHATBOT
 // =========================================================
 
+const chatbotWrapper = document.getElementById("chatbotWrapper");
 const chatbotToggle = document.getElementById("chatbotToggle");
 const chatbotBox = document.getElementById("chatbotBox");
 const chatbotClose = document.getElementById("chatbotClose");
@@ -580,6 +581,10 @@ if (chatbotToggle) {
     if (!isOpen) {
       chatbotBox.classList.add("open");
 
+      if (chatbotWrapper) {
+        chatbotWrapper.classList.add("chat-open");
+      }
+
       if (chatbotBadge) {
         chatbotBadge.classList.add("hidden");
       }
@@ -597,6 +602,10 @@ if (chatbotToggle) {
       }
     } else {
       chatbotBox.classList.remove("open");
+
+      if (chatbotWrapper) {
+        chatbotWrapper.classList.remove("chat-open");
+      }
     }
   });
 }
@@ -604,6 +613,10 @@ if (chatbotToggle) {
 if (chatbotClose) {
   chatbotClose.addEventListener("click", () => {
     chatbotBox.classList.remove("open");
+
+    if (chatbotWrapper) {
+      chatbotWrapper.classList.remove("chat-open");
+    }
   });
 }
 
